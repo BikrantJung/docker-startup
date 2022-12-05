@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <form id="form">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" value="" />
+        <div style="margin: 1rem"></div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" value="" />
+        <button>Save data</button>
+      </form>
+      <h2>Your data</h2>
+      <p id="display_username">Username</p>
+      <p id="display_email">Email</p>
+    </div>
+    <script>
+      const displayUsername = document.getElementById("display_username");
+      const displayEmail = document.getElementById("display_email");
+      async function getDataFromAPI() {
+        try {
+          const rawResponse = await fetch("http://localhost:3000/profile");
+          const data = await rawResponse.json();
+          displayUsername.innerText = "Username:" + data.username;
+          displayEmail.innerText = "Email:" + data.email;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      getDataFromAPI();
+
+      const form = document.getElementById("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        const formData = {
+          username: data.get("username"),
+          email: data.get("email"),
+        };
+        if (!formData) return;
+        displayUsername.innerText = "Username:" + formData.username;
+        displayEmail.innerText = "Email:" + formData.email;
+        try {
+          const rawResponse = await fetch(
+            "http://localhost:3000/update-profile",
+            {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            }
+          );
+          const data = await rawResponse.json();
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    </script>
+  </body>
+</html>
