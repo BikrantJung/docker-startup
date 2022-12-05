@@ -100,7 +100,7 @@ RUN  mkdir  -p  /home/app
 
 COPY  .  /home/app
 
-CMD  [  "node"."server.js"  ]
+CMD  [  "node","/home/app/server.js"  ]
 ```
 
 `FROM`: From the image
@@ -109,4 +109,18 @@ CMD  [  "node"."server.js"  ]
 `COPY` : Copy the current local machine files into the destination
 `CMD` : Run that command
 
-> Now run `docker build -t my-app:0.0 .` to build the image
+Now run `docker build -t my-app:0.0 .` to build the image
+
+Run `docker run my-app:0.0` to start the app
+
+### Some Extra Commands
+
+`docker ps -a` to view all containers.
+
+`docker rm CONTAINER_ID` to delete the container.
+
+`docker images` to view all images.
+
+`docker rmi IMAGE_ID` to remove the image.
+
+`docker logs CONTAINER_ID` to view all logs.
