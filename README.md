@@ -104,9 +104,13 @@ CMD  [  "node","/home/app/server.js"  ]
 ```
 
 `FROM`: From the image
+
 `ENV` : env variables
+
 `RUN` : Make a new folder in container
+
 `COPY` : Copy the current local machine files into the destination
+
 `CMD` : Run that command
 
 Now run `docker build -t my-app:0.0 .` to build the image
